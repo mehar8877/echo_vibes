@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Screens/categories_screen.dart';
-
 void main() {
   runApp(const MyApp());
 }
