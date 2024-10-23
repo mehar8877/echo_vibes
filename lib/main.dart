@@ -1,4 +1,3 @@
-import 'package:ecovibe/screens/categories_screen.dart';
 import 'package:ecovibe/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 void main() {
