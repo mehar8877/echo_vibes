@@ -1,3 +1,5 @@
+import 'package:ecovibe/screens/categories_screen.dart';
+import 'package:ecovibe/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
@@ -9,7 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      // home: HomePage(),
+      home:Pro(),
     );
   }
 }
