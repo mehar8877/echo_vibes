@@ -23,19 +23,21 @@ class HomeScreen extends StatelessWidget {
             return Stack(
               children: [
                 GestureDetector(
-                  onDoubleTap: (){},
+                  onDoubleTap: () {},
                   child: Image.network(
                     images[index],
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,
-
-                    ),
+                  ),
                 ),
                 Positioned(
-                  bottom:20 ,
-                  right: 20,
-                  child: Icon(Icons.favorite_border_outlined))
+                    bottom: 20,
+                    right: 20,
+                    child: Icon(
+                      Icons.favorite_border_outlined,
+                      color: Colors.white,
+                    ))
               ],
             );
           }),
