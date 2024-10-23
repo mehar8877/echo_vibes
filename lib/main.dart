@@ -1,7 +1,15 @@
+import 'package:ecovibe/Providers/like_provider.dart';
+import 'package:ecovibe/screens/home_screen.dart';
 import 'package:ecovibe/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_)=>LikeProvider()),
+    ],child: MyApp(),)
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,8 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: HomePage(),
-      home:Pro(),
+      home: HomeScreen(),
+      //home:Pro(),
     );
   }
 }
