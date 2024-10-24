@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     'It always seems impossible until it’s done',
     'The only way to do great work is to love what you do',
     '"Don\'t watch the clock; do what it does. Keep going'
-
   ];
   //int count = 0, bc = 0;
   @override
@@ -48,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Random random = Random();
     final double totalHeight = MediaQuery.of(context).size.height;
     final double totalWidth = MediaQuery.of(context).size.width;
     final colorProvider = Provider.of<ColorProvider>(context);
@@ -78,11 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: PageView.builder(
-          controller: _pageController,
+          //controller: _pageController,
           itemCount: screens.length,
           scrollDirection: Axis.vertical,
           onPageChanged: (index) {
-            // Generate new random gradient on page change
             colorProvider.generateRandomGradient();
           },
           itemBuilder: (context, index) {
@@ -101,8 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: colorProvider
-                            .currentGradient, // Use current gradient
+                        colors: colorProvider.currentGradient,
                       ),
                     ),
                   ),
@@ -113,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           vertical: 0, horizontal: 8),
                       child: Text(
                         screens[index],
-                        style: TextStyle(
+                        style: GoogleFonts.raleway(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
