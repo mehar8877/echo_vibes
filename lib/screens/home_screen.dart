@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'dart:math';
 // Import ColorProvider
 
 class HomeScreen extends StatefulWidget {
@@ -18,11 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
 
   final List<String> screens = [
+    'HI belive in yourself ,',
     'The secret of getting ahead is getting started',
     'You don\'t have to be great to start, but you have to start to be great',
     'It always seems impossible until it’s done',
     'The only way to do great work is to love what you do',
     '"Don\'t watch the clock; do what it does. Keep going'
+
   ];
 
   @override
@@ -45,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Random random = Random();
     final double totalHeight = MediaQuery.of(context).size.height;
     final double totalWidth = MediaQuery.of(context).size.width;
 
@@ -94,16 +98,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
+
                   Container(
+
                     width: totalWidth,
                     height: totalHeight,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: colorProvider
-                            .currentGradient, // Use current gradient
-                      ),
+                      color: Color.fromRGBO(random.nextInt(256),random.nextInt(256) , random.nextInt(256), 1)
                     ),
                   ),
                   Align(
@@ -182,15 +183,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 like.toggle(index);
                               },
-                              child: Icon(
-                                like.isLiked(index)
-                                    ? Icons.favorite
-                                    : Icons.favorite_border_outlined,
-                                color: like.isLiked(index)
-                                    ? Colors.red
-                                    : Colors.white,
-                                size: 50,
-                              ),
+                              child:Container(
+                                width: 60, // Slightly larger for a more noticeable button
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle, // Ensures the container stays circular
+                                  color: Colors.white
+                                ),
+                                child: Icon(
+                                  like.isLiked(index) ? Icons.favorite : Icons.favorite_border_outlined,
+                                  color: like.isLiked(index) ? Colors.red : Colors.black,
+                                  size: 30,
+                                  // Slightly reduced size for balance
+                                ),
+                              )
+
                             ),
                           ],
                         );

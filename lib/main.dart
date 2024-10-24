@@ -9,7 +9,7 @@ void main() {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_)=>LikeProvider()),
-      ChangeNotifierProvider(create: (_)=>ColorProvider()),
+     ChangeNotifierProvider(create: (_)=>ColorProvider()),
     ],child: MyApp(),)
     );
 }
