@@ -1,32 +1,28 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-class LikeProvider extends ChangeNotifier {
-  List<bool> ll = [];
-  bool _isDoubleTapped = false;
-  bool get isDobuleTapped => _isDoubleTapped;
+class LikeProvider with ChangeNotifier {
+  List<bool> _isLiked = [];
+  bool isDobuleTapped = false;
+  void genreateLike(int totalItems) {
+    _isLiked = List.generate(totalItems, (_) => false);
+  }
 
-  void genreateLike(int n) {
-    ll = List.generate(n, (_) => false);
+  bool isLiked(int index) {
+    return _isLiked[index];
   }
 
   void toggle(int index) {
-    ll[index] = !ll[index];
+    _isLiked[index] = !_isLiked[index];
     notifyListeners();
   }
 
   void makeLiked(int index) {
-    _isDoubleTapped = true;
-    ll[index] = true;
+    isDobuleTapped = true;
+    _isLiked[index] = true;
     notifyListeners();
-    Timer(Duration(seconds: 1), () {
-      _isDoubleTapped = false;
+    Future.delayed(Duration(seconds: 1), () {
+      isDobuleTapped = false;
       notifyListeners();
     });
-  }
-
-  bool isLiked(int index) {
-    return ll[index];
   }
 }
