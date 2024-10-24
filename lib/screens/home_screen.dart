@@ -1,8 +1,10 @@
+import 'package:ecovibe/Providers/color_provider.dart';
 import 'package:ecovibe/Providers/like_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+// Import ColorProvider
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -12,22 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    initTts();
-    super.initState();
-  }
-
   FlutterTts ffTts = FlutterTts();
-  void initTts() async {
-    await ffTts.setLanguage("en-US");
-    await ffTts.setSpeechRate(0.4);
-    await ffTts.setPitch(1.0);
-  }
-
-  void _speak(String text) async {
-    await ffTts.speak(text);
-  }
+  late PageController _pageController;
 
   final List<String> screens = [
     'The secret of getting ahead is getting started',
@@ -38,25 +26,65 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    initTts();
+    _pageController = PageController();
+    super.initState();
+  }
+
+  void initTts() async {
+    await ffTts.setLanguage("en-IN");
+    await ffTts.setSpeechRate(0.55);
+    await ffTts.setPitch(0.95);
+    await ffTts.setVoice({"name": "en-in-x-ene-local", "locale": "en-IN"});
+  }
+
+  void _speak(String text) async {
+    await ffTts.speak(text);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double totalHeight = MediaQuery.of(context).size.height;
     final double totalWidth = MediaQuery.of(context).size.width;
 
+    final colorProvider = Provider.of<ColorProvider>(context);
+
     Provider.of<LikeProvider>(context, listen: false)
         .genreateLike(screens.length);
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: colorProvider.currentGradient[0],
         leading: IconButton(
             onPressed: () {},
             icon: Icon(
               Icons.menu,
               color: Colors.white,
+              size: 30,
             )),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.card_giftcard,
+                color: Colors.white,
+                size: 30,
+              ),
+            ),
+          )
+        ],
       ),
       body: PageView.builder(
+          controller: _pageController,
           itemCount: screens.length,
           scrollDirection: Axis.vertical,
+          onPageChanged: (index) {
+            // Generate new random gradient on page change
+            colorProvider.generateRandomGradient();
+          },
           itemBuilder: (context, index) {
             return GestureDetector(
               onDoubleTap: () {
@@ -70,7 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: totalWidth,
                     height: totalHeight,
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: colorProvider
+                            .currentGradient, // Use current gradient
+                      ),
                     ),
                   ),
                   Align(
@@ -88,6 +121,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  Positioned(child:
+                      Consumer<LikeProvider>(builder: (context, like, child) {
+                    if (like.isDobuleTapped) {
+                      return TweenAnimationBuilder(
+                        tween: Tween<double>(begin: 0, end: 1),
+                        duration: Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                        builder: (context, value, child) {
+                          return Opacity(
+                            opacity: value,
+                            child: Transform.translate(
+                              offset: Offset(0, -50 * value),
+                              child: Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                                size: 50 + (50 * value),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return SizedBox.shrink();
+                  })),
                   Positioned(
                     bottom: 36,
                     right: 20,
@@ -108,10 +165,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: GestureDetector(
                         onTap: () {
                           _speak(screens[index]);
-                          debugPrint('Edokati Chepubey');
                         },
                         child: Icon(
-                          Icons.mic,
+                          Icons.speaker_phone,
                           color: Colors.white,
                           size: 36,
                         ),
@@ -124,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                like.makeDislike(index);
+                                like.toggle(index);
                               },
                               child: Icon(
                                 like.isLiked(index)

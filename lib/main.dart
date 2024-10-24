@@ -1,3 +1,4 @@
+import 'package:ecovibe/Providers/color_provider.dart';
 import 'package:ecovibe/Providers/like_provider.dart';
 import 'package:ecovibe/screens/home_screen.dart';
 import 'package:ecovibe/screens/profile_screen.dart';
@@ -8,6 +9,7 @@ void main() {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_)=>LikeProvider()),
+      ChangeNotifierProvider(create: (_)=>ColorProvider()),
     ],child: MyApp(),)
     );
 }
