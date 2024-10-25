@@ -18,7 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   FlutterTts ffTts = FlutterTts();
 
   final List<String> screens = [
-    'HI belive in yourself ,',
+    "hii jkdafjakfmlaf",
+    'HI belive in yourself,',
     'The secret of getting ahead is getting started',
     'You don\'t have to be great to start, but you have to start to be great',
     'It always seems impossible until it’s done',
