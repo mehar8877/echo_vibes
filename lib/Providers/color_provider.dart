@@ -21,4 +21,5 @@ class ColorProvider with ChangeNotifier {
     _currentGradient = _colorPalette[index];
     notifyListeners();
   }
+  
 }

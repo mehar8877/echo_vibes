@@ -1,17 +1,19 @@
 import 'package:ecovibe/Providers/color_provider.dart';
 import 'package:ecovibe/Providers/like_provider.dart';
+
 import 'package:ecovibe/screens/home_screen.dart';
 import 'package:ecovibe/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_)=>LikeProvider()),
-     ChangeNotifierProvider(create: (_)=>ColorProvider()),
-    ],child: MyApp(),)
-    );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => LikeProvider()),
+      ChangeNotifierProvider(create: (_) => ColorProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
